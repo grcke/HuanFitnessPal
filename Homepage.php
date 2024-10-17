@@ -14,4 +14,6 @@
 	<h1>Huan Fitness Pal</h1>
 	<h4>For all your fitness needs...</h4>
 </div>
+
+<?php include 'index.php';?>
 </html>
