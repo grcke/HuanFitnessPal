@@ -16,12 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     // only run if there's no prior errors
     if (count($errors) == 0) {
         // check if user exists
-        $sql = "SELECT type, password FROM userinfo WHERE email = ?";
+        $sql = "SELECT userID, type, password FROM userinfo WHERE email = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
 
-        mysqli_stmt_bind_result($stmt, $type, $passwordHash);
+        mysqli_stmt_bind_result($stmt, $userID, $type, $passwordHash);
         mysqli_stmt_store_result($stmt);
 
         if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -30,8 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
             // verify password
             if (password_verify($password, $passwordHash)) {
-                // if password is correct, store user type in session
+                // if password is correct, store user type and user id in session to be used in other functions like admin features, user features..
                 $_SESSION['user_type'] = $type;
+                $_SESSION['user_id'] = $userID;
+
                 // redirect each user to their respective pages
                 header("Location: " . ($type == "user" ? "user.php" : "admin.php"));
                 exit();

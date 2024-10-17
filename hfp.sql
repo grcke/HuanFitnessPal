@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2024 at 01:25 PM
+-- Generation Time: Oct 17, 2024 at 12:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `userinfo` (
+  `userID` int(10) NOT NULL,
   `type` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
@@ -41,7 +42,18 @@ CREATE TABLE `userinfo` (
 -- Indexes for table `userinfo`
 --
 ALTER TABLE `userinfo`
+  ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `userinfo`
+--
+ALTER TABLE `userinfo`
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
