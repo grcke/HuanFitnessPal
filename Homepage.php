@@ -1,18 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 <style>
+
 header{
 	width: 100%;
 	text-align: center;
 	color: white; 
-	background: #2273f5;
+	background: #405dde;
 	border-style: ridge;
-	padding: 30px;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 body{
 	background-image: url('https://st4.depositphotos.com/1022135/25748/i/450/depositphotos_257486682-stock-photo-group-young-people-sportswear-talking.jpg');
 	background-size: cover;
+	margin: 0;
+	width: 100%
+	font-family: acme;
 }
 
 .login{
@@ -20,17 +26,27 @@ body{
 	background: #c4d7f5;
 	color: black;
 	text-align: center;
-	padding: 30px;
+	padding: 70px;
 	margin: 0 auto;
+	font-size: 120%;
+}
+
+p{
+	font-size: 90%;
+}
+
+input{
+	height: 30px;
+	width: 210px;
 }
 </style>
 
-<header>
-	<h1>Huan Fitness Pal</h1>
-	<h4>For all your fitness needs...</h4>
-</header>
+<body>
 
-<body>	
+<header>
+	<h1 style="font-size: 40px">Huan Fitness Pal</h1>
+	<h4 style="font-size: 20px"><i>For all your fitness needs...</i></h4>
+</header>
 
 <div class="login">
 	<?php include 'login.php';?>
