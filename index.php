@@ -6,10 +6,6 @@
     <title>Index</title>
 </head>
 <body>
-    <div class="button-container">
-        <h1>HuanFitnessPal</h1>
-        <a href="login.php">Login</a><br>
-        <a href="signup.php">Register</a>
-    </div>
+    <?php include 'Homepage.php';?>
 </body>
 </html>

@@ -38,11 +38,15 @@
     }
     ?>
 
-    <form action="forgot_password_process.php" method="POST">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <input type="submit" value="Reset Password">
-    </form>
+    <!-- only show this form when the user has not chosen their email yet -->
+    <?php if (!isset($_SESSION['reset_email'])): ?>
+        <form action="forgot_password_process.php" method="POST">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <input type="submit" value="Reset Password">
+        </form>
+    <?php endif; ?>
 
+    <!-- only show this form when the user has chosen the email they want to reset password for -->
     <?php if (isset($_SESSION['reset_email'])): ?>
         <h2>Reset Your Password</h2>
         <form action="reset_password.php" method="POST">
@@ -62,53 +66,80 @@
         </form>
     <?php endif; ?>
 
-    <form action="clear_session.php" method="POST" style="display:inline;">
+    <form action="clear_session.php" method="POST" id="goBackForm" style="display:inline;">
         <br>
         <input type="submit" value="Go Back" class="back-button">
     </form>
     
-
     <script>
-    // function to validate password
-    function validatePassword() {
-        var password = document.getElementById("new_password").value;
-        
-        // validate length
-        if (password.length >= 8) {
-            document.getElementById("length").classList.remove("invalid");
-            document.getElementById("length").classList.add("valid");
-        } else {
-            document.getElementById("length").classList.remove("valid");
-            document.getElementById("length").classList.add("invalid");
+        var goBackClicked = false; // to track if the go back button was clicked
+
+        // function to validate password
+        function validatePassword() {
+            var password = document.getElementById("new_password").value;
+            
+            // validate length
+            if (password.length >= 8) {
+                document.getElementById("length").classList.remove("invalid");
+                document.getElementById("length").classList.add("valid");
+            } else {
+                document.getElementById("length").classList.remove("valid");
+                document.getElementById("length").classList.add("invalid");
+            }
+
+            // validate uppercase letters
+            if (/[A-Z]/.test(password)) {
+                document.getElementById("uppercase").classList.remove("invalid");
+                document.getElementById("uppercase").classList.add("valid");
+            } else {
+                document.getElementById("uppercase").classList.remove("valid");
+                document.getElementById("uppercase").classList.add("invalid");
+            }
+
+            // validate numbers
+            if (/[0-9]/.test(password)) {
+                document.getElementById("number").classList.remove("invalid");
+                document.getElementById("number").classList.add("valid");
+            } else {
+                document.getElementById("number").classList.remove("valid");
+                document.getElementById("number").classList.add("invalid");
+            }
+
+            // validate special characters
+            if (/[\W_]/.test(password)) { 
+                document.getElementById("special").classList.remove("invalid");
+                document.getElementById("special").classList.add("valid");
+            } else {
+                document.getElementById("special").classList.remove("valid");
+                document.getElementById("special").classList.add("invalid");
+            }
         }
 
-        // validate uppercase letters
-        if (/[A-Z]/.test(password)) {
-            document.getElementById("uppercase").classList.remove("invalid");
-            document.getElementById("uppercase").classList.add("valid");
-        } else {
-            document.getElementById("uppercase").classList.remove("valid");
-            document.getElementById("uppercase").classList.add("invalid");
-        }
+        // only show the confirmation when reset_email is set
+        <?php if (isset($_SESSION['reset_email'])): ?>
+        window.addEventListener("beforeunload", function (e) {
+            // if Go Back button was clicked, don't show confirmation
+            if (goBackClicked) return;
 
-        // validate numbers
-        if (/[0-9]/.test(password)) {
-            document.getElementById("number").classList.remove("invalid");
-            document.getElementById("number").classList.add("valid");
-        } else {
-            document.getElementById("number").classList.remove("valid");
-            document.getElementById("number").classList.add("invalid");
-        }
+            navigator.sendBeacon('clear_session.php'); // clear the session when leaving the page
 
-        // validate special characters
-        if (/[\W_]/.test(password)) { 
-            document.getElementById("special").classList.remove("invalid");
-            document.getElementById("special").classList.add("valid");
-        } else {
-            document.getElementById("special").classList.remove("valid");
-            document.getElementById("special").classList.add("invalid");
-        }
-    }
+            var confirmationMessage = "Are you sure you want to leave? This will reset what you've entered.";
+            e.returnValue = confirmationMessage; 
+            return confirmationMessage;
+        });
+
+        // confirmation for the "Go Back" button
+        document.getElementById("goBackForm").addEventListener("submit", function(e) {
+            goBackClicked = true; 
+
+            var confirmation = confirm("Are you sure you want to go back? You will lose all your entered information.");
+            if (!confirmation) {
+                goBackClicked = false;  // reset if user cancels pop up
+                e.preventDefault();  // prevent form submission
+            }
+        });
+        <?php endif; ?>
+    
     </script>
 </body>
 </html>

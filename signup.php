@@ -46,7 +46,7 @@
         
         <input type="submit" value="Sign Up">
 
-        <p>Already registered? <a href="login.php">Login here</a>.</p>
+        <p>Already registered? <a href="Homepage.php">Login here</a>.</p>
 
         <p>Password must meet the following requirements:</p>
         <ul>
