@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             // verify password
             if (password_verify($password, $passwordHash)) {
                 // if password is correct, store user type and user id in session to be used in other functions like admin features, user features..
+                $_SESSION['email'] = $email;
                 $_SESSION['user_type'] = $type;
                 $_SESSION['user_id'] = $userID;
 
