@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if (count($errors) > 0) {
         $_SESSION['errors'] = $errors; // store errors in session
-        header("Location: login.php");
+        header("Location: Homepage.php");
         exit();
     }
 }
