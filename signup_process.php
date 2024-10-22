@@ -66,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		if (mysqli_stmt_execute($stmt)) {
             $_SESSION['success'] = "User registered successfully!";
+            $_SESSION['email'] = $email;
+            $_SESSION['user_type'] = $type;
+            $_SESSION['user_id'] = $userID;
 
             if ($type === 'admin') {
                 header("Location: admin.php"); // redirect to admin page ! UPDATE !
