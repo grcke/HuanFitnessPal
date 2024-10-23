@@ -9,8 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $errors = array(); // array to store error msgs
 
     // validation checks
-    if (empty($email) || empty($password)) {
+    if (empty($email) && empty($password)) {
         $errors[] = "Email and password are required.";
+    }else if (empty($email) ){
+        $errors[] = "Email is required.";
+    }else if (empty($password)){
+        $errors[] = "Password is required.";
+    }else{
+        // when all fields are filled in 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Email format is invalid.";
+        }
     }
 
     // only run if there's no prior errors
@@ -30,10 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
             // verify password
             if (password_verify($password, $passwordHash)) {
-                // if password is correct, store user type and user id in session to be used in other functions like admin features, user features..
+                // if password is correct, store email and user type in session to be used in other functions like admin features, user features..
                 $_SESSION['email'] = $email;
                 $_SESSION['user_type'] = $type;
-                $_SESSION['user_id'] = $userID;
 
                 // redirect each user to their respective pages
                 header("Location: " . ($type == "user" ? "user.php" : "admin.php"));

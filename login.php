@@ -15,6 +15,7 @@
 
     <?php
     session_start();
+    include("database.php");
     if (isset($_SESSION['errors'])) {
         foreach ($_SESSION['errors'] as $error) {
             echo "<div class='error'>$error</div>";

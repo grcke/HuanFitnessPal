@@ -13,6 +13,8 @@
             color: green;
         }
     </style>
+    <!-- reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <h1>Sign Up</h1>
@@ -43,6 +45,9 @@
         <input type="password" name="password" placeholder="Password" id="password" required onkeyup="validatePassword()">
 
         <input type="password" name="repeat_password" placeholder="Repeat Password" required>
+
+        <!--reCAPTCHA widget -->
+        <div class="g-recaptcha" data-sitekey="6LeE6mkqAAAAABtQbXRo5_Eh4ZIsoVna-zNOleji"></div>
         
         <input type="submit" value="Sign Up">
 

@@ -51,6 +51,7 @@
         <h2>Reset Your Password</h2>
         <form action="reset_password.php" method="POST">
             <input type="hidden" name="email" value="<?php echo htmlspecialchars($_SESSION['reset_email']); ?>">
+            <input type="password" name="old_password" placeholder="Old Password" id="old_password" required onkeyup="validatePassword()"><br><br>
             <input type="password" name="new_password" placeholder="New Password" id="new_password" required onkeyup="validatePassword()">
             <input type="password" name="repeat_password" placeholder="Repeat Password" required onkeyup="validatePassword()">
 
@@ -73,6 +74,7 @@
     
     <script>
         var goBackClicked = false; // to track if the go back button was clicked
+        var isSubmittingForm = false;
 
         // function to validate password
         function validatePassword() {
@@ -118,8 +120,8 @@
         // only show the confirmation when reset_email is set
         <?php if (isset($_SESSION['reset_email'])): ?>
         window.addEventListener("beforeunload", function (e) {
-            // if Go Back button was clicked, don't show confirmation
-            if (goBackClicked) return;
+            // if Go Back button was clicked or if user is submitting form, don't show confirmation
+            if (goBackClicked || isSubmittingForm) return;
 
             navigator.sendBeacon('clear_session.php'); // clear the session when leaving the page
 
@@ -137,6 +139,11 @@
                 goBackClicked = false;  // reset if user cancels pop up
                 e.preventDefault();  // prevent form submission
             }
+        });
+
+        // set the submitting flag when the form is submitted
+        document.querySelector('form[action="reset_password.php"]').addEventListener("submit", function() {
+            isSubmittingForm = true;
         });
         <?php endif; ?>
     

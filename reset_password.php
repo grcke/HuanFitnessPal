@@ -10,6 +10,7 @@ if (!isset($_SESSION['reset_email'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
     $repeat_password = $_POST['repeat_password'];
 
@@ -34,31 +35,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $current_password_hash = $row['password'];
     
     // validation checks
-    if (empty($new_password) || empty($repeat_password)) {
+    if (empty($old_password) || empty($new_password) || empty($repeat_password)) {
         $errors[] = "All fields are required.";
-    }
-
-    if ($new_password !== $repeat_password) {
-        $errors[] = "Passwords do not match.";
-    }
-
-    // ensure that new password is not the same as before
-    if (password_verify($new_password, $current_password_hash)) {
-        $errors[] = "New password cannot be the same as the old password.";
-    }
-
-    // additional password validation checks
-    if (strlen($new_password) < 8) {
-        $errors[] = "Password must be at least 8 characters long.";
-    }
-    if (!preg_match('/[A-Z]/', $new_password)) {
-        $errors[] = "Password must contain at least one uppercase letter.";
-    }
-    if (!preg_match('/[0-9]/', $new_password)) {
-        $errors[] = "Password must contain at least one number.";
-    }
-    if (!preg_match('/[\W_]/', $new_password)) {
-        $errors[] = "Password must contain at least one special character (e.g., !@#$%^&*).";
+    }else{  // when all fields are filled in
+        if (!password_verify($old_password, $current_password_hash)) {
+            $errors[] = "Old password is incorrect.";
+        }else{ // when old password is correct
+            // ensure that new password is not the same as before
+            if (password_verify($new_password, $current_password_hash)) {
+                $errors[] = "New password cannot be the same as the old password.";
+            }
+            if ($new_password !== $repeat_password) {
+                $errors[] = "Passwords do not match.";
+            }
+            // additional password validation checks
+            if (strlen($new_password) < 8) {
+                $errors[] = "Password must be at least 8 characters long.";
+            }
+            if (!preg_match('/[A-Z]/', $new_password)) {
+                $errors[] = "Password must contain at least one uppercase letter.";
+            }
+            if (!preg_match('/[0-9]/', $new_password)) {
+                $errors[] = "Password must contain at least one number.";
+            }
+            if (!preg_match('/[\W_]/', $new_password)) {
+                $errors[] = "Password must contain at least one special character (e.g., !@#$%^&*).";
+            }
+        }
     }
 
     if (count($errors) > 0) {
