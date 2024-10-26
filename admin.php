@@ -6,3 +6,6 @@ session_start();
 <h3> You are currently logged in as: <?php echo $_SESSION['email']; ?> </h3>
 
 <p> to-do management page...</p>
+
+<form action="logout.php" method="POST">
+        <input type="submit" value="Logout">

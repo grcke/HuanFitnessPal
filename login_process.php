@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // if password is correct, store email and user type in session to be used in other functions like admin features, user features..
                 $_SESSION['email'] = $email;
                 $_SESSION['user_type'] = $type;
+                $_SESSION['userID'] = $userID;
 
                 // redirect each user to their respective pages
                 header("Location: " . ($type == "user" ? "user.php" : "admin.php"));
