@@ -1,0 +1,331 @@
+header{
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: white; 
+    background: #405dde;
+    border-style: ridge;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+body{
+    background-image: url('https://st4.depositphotos.com/1022135/25748/i/450/depositphotos_257486682-stock-photo-group-young-people-sportswear-talking.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+    right: 0;
+    left: 0;
+}
+
+.nut{
+    width: 50%;
+    height: 1%;
+    background: #c4d7f5;
+    color: black;
+    text-align: center;
+    padding: 70px;
+    margin: 0 auto;
+    font-size: 120%;
+    border-style: ridge;
+    overflow: hidden;
+    margin-bottom: 150px;
+}
+
+input{
+    height: 40px;
+    width: 250px;
+}
+
+footer{
+    position: absolute;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: white; 
+    background: #405dde;
+    border-style: ridge;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: fixed;
+    bottom: 0;
+    border-style: ridge;
+}
+
+/* Improved Container Styling */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
+    margin: 0 auto;
+    background-color: #ffffffcf; /* Light background to make the form stand out */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for a 3D effect */
+    padding: 40px;
+    border-radius: 10px; /* Smooth corners for a modern look */
+    gap: 30px; /* Add spacing between left and right columns */
+}
+
+/* Left Column Styling */
+.left-column {
+    width: 40%; /* Assuming this is already defined */
+    height: 51.5vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    position: relative;
+    top: 2.5vh;
+    padding-left: 0; /* Ensure no padding on the left */
+}
+
+/* Border for image */
+.img-border {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    border-radius: 8px;
+    background-color: #f5f5f5; /* Light background for better visibility */
+    background-image: url('https://happybellyfish.com/wp-content/uploads/2020/10/woman-5591780_1920.jpg');
+    background-size: cover;
+}
+
+/* Placeholder for image in the left column */
+.img-border::before {
+    font-size: 1.2em;
+    color: #bbb;
+    text-align: center;
+}
+
+/* Info section in the left column */
+.info {
+    text-align: left; 
+    font-weight: bold; 
+    color: #333; 
+}
+
+/* Right Column Styling */
+.right-column {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Styling for form inputs and labels */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left; /* Align labels to the left */
+    display: block; /* Make sure labels take up full width */
+    margin-left: 0; /* Ensure no margin pushes the label away from the left */
+}
+
+/* Input fields styling */
+input {
+    display: block;
+    width: 100%; /* Full width input fields */
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: none; /* Remove the border */
+    border-bottom: 2px solid #ccc; /* Optional: bottom border for a cleaner look */
+    border-radius: 0; /* Remove the border radius */
+    background-color: transparent; /* Transparent background */
+    outline: none; /* Remove default blue outline */
+}
+
+/* Focus state for inputs */
+input:focus {
+    border-bottom: 2px solid #405dde; /* Add color to bottom border when focused */
+}
+
+/* Styling for the submit button */
+input[type="submit"], input[type="button"] {
+    width: auto;
+    background-color: #405dde;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"], input[type="button"] {
+    width: auto;
+    background-color: #405dde;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+    background-color: #324bbf;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    text-align: center;
+    border-radius: 10px; /* Rounded corners */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*Appointment Status*/
+ /* Center the modal content on the screen */
+ .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with transparency */
+}
+
+.modal-content {
+    position: sticky;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Width of the modal */
+    max-width: 800px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button styling */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Custom background color based on status */
+.status-pending {
+    background-color: yellow;
+}
+
+.status-confirmed {
+    background-color: green;
+    color: white;
+}
+
+.status-declined {
+    background-color: red;
+    color: white;
+}
+
+.status-cancelled {
+    background-color: black;
+    color: white;
+}
+
+/* Center the table inside the modal */
+.modal table {
+    margin: auto;
+}
+
+/* Adjusting the modal's position for responsiveness */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Reduce the width on smaller screens */
+        transform: translate(-50%, -10%);
+    }
+}
+
+/*Next and Previous Table*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
