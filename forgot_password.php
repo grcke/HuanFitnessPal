@@ -24,8 +24,8 @@ body{
 }
 
 .forgot{
-	width: 40%;
-	height: 250px;
+	width: 50%;
+	height: 1%;
 	background: #c4d7f5;
 	color: black;
 	text-align: center;
@@ -33,6 +33,8 @@ body{
 	margin: 0 auto;
 	font-size: 120%;
 	border-style: ridge;
+	overflow: hidden;
+	margin-bottom: 150px;
 }
 
 input{

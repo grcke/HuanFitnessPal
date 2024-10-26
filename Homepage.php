@@ -24,8 +24,8 @@ body{
 }
 
 .login{
-	width: 40%;
-	height: 250px;
+	width: 50%;
+	height: 1%;
 	background: #c4d7f5;
 	color: black;
 	text-align: center;
@@ -33,6 +33,8 @@ body{
 	margin: 0 auto;
 	font-size: 120%;
 	border-style: ridge;
+	overflow: hidden;
+	margin-bottom: 150px;
 }
 
 p{
@@ -66,9 +68,10 @@ footer{
 	<h4 style="font-size: 20px"><i>For all your fitness needs...</i></h4>
 </header>
 
-<body>
-
-<!--creates a div which then calls and hosts the elements from login.php-->
+<!--
+creates a div which then calls and hosts the elements from login.php
+this is not used for the other phps due to inconvenience - the format used for this php was as a test and it stuck
+-->
 <div class="login">
 	<?php include 'login.php';?>
 </div>
