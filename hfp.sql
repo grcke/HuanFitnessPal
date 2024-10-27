@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2024 at 02:19 PM
+-- Generation Time: Oct 27, 2024 at 09:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,19 @@ CREATE TABLE `exercise` (
   `UserID` int(11) NOT NULL,
   `DateTime` datetime NOT NULL,
   `record` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `request`
+--
+
+CREATE TABLE `request` (
+  `ID` int(11) NOT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `requestdate` date DEFAULT NULL,
+  `requesttime` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -100,6 +113,13 @@ ALTER TABLE `exercise`
   ADD KEY `UserID` (`UserID`);
 
 --
+-- Indexes for table `request`
+--
+ALTER TABLE `request`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `userinfo`
 --
 ALTER TABLE `userinfo`
@@ -131,6 +151,12 @@ ALTER TABLE `exercise`
   MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `request`
+--
+ALTER TABLE `request`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `userinfo`
 --
 ALTER TABLE `userinfo`
@@ -157,6 +183,12 @@ ALTER TABLE `weight`
 --
 ALTER TABLE `exercise`
   ADD CONSTRAINT `exercise_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `userinfo` (`userID`);
+
+--
+-- Constraints for table `request`
+--
+ALTER TABLE `request`
+  ADD CONSTRAINT `request_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `userinfo` (`userID`);
 
 --
 -- Constraints for table `water`
