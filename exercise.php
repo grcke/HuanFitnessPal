@@ -87,6 +87,11 @@ session_start();
 	<form action="user.php" method="POST">
 			<input type="submit" value="Back">
 	</form>
+
+	<?php
+	$_POST['dbname'] = 'exercise';
+	include 'gettable.php'; ?>
+
 </div>
 
 <footer>

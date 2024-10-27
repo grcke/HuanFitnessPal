@@ -87,8 +87,11 @@ session_start();
         <input type="submit" value="Back">
 </form>
 
+<?php 
+$_POST['dbname'] = 'weight';
+include 'gettable.php'; 
+?>
 
-<p> to-do show weight records...</p>
 </div>
 
 <footer>
@@ -100,4 +103,3 @@ session_start();
 
 </body>
 </html>
->>>>>>> a92e4a1513655454723b34fc7afc7ae988189491
