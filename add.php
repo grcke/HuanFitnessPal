@@ -93,6 +93,12 @@
     <label for="requesttime">Time</label>
     <input type="time" id="time" name="requesttime" required>
 
+    <label for="status">Status</label>
+    <select name="status" id="status" required>
+        <option value="Pending">Pending</option>
+        <option value="Completed">Completed</option>
+    </select>
+
     <button type="submit" name="confirm">Confirm</button>
     <button type="button" class="cancel-button" onclick="window.location.href='admin.php';">Cancel</button>
 </form>
@@ -103,10 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm'])) {
     $requesttime = $_POST['requesttime'];
     $email = $_POST['email'];
     $name = $_POST['name'];
+    $status = $_POST['status']; 
 
     if (!empty($email) && !empty($name)) {
-        $stmt = mysqli_prepare($conn, "INSERT INTO appointment (email, app_date, app_time, name) VALUES (?, ?, ?, ?)");
-        mysqli_stmt_bind_param($stmt, "ssss", $email, $requestdate, $requesttime, $name); 
+        $stmt = mysqli_prepare($conn, "INSERT INTO appointment (email, app_date, app_time, name, status) VALUES (?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "sssss", $email, $requestdate, $requesttime, $name, $status); 
 
         if (mysqli_stmt_execute($stmt)) {
             header("Location: admin.php");
