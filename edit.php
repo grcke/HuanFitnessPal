@@ -1,39 +1,33 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hfp";
+session_start();
+include("database.php");
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
+// Check if `id` (email) is provided in the URL
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); 
+    $email = mysqli_real_escape_string($conn, $_GET['id']); // Sanitize the email
 
-    $sql = "SELECT userID, requestdate, requesttime FROM request WHERE userID = $id";
+    // Retrieve the existing data for the specified email
+    $sql = "SELECT * FROM appointment WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
+        $row = mysqli_fetch_assoc($result); // Fetch the record for display
     } else {
         die("Record not found.");
     }
 } else {
-    die("No ID provided.");
+    die("No email provided.");
 }
 
+// Handle form submission for updating the record
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requestdate = mysqli_real_escape_string($conn, $_POST['requestdate']);
     $requesttime = mysqli_real_escape_string($conn, $_POST['requesttime']);
 
-    $updateSql = "UPDATE request SET requestdate='$requestdate', requesttime='$requesttime' WHERE userID=$id";
+    // Update the record with the new values
+    $updateSql = "UPDATE appointment SET app_date='$requestdate', app_time='$requesttime' WHERE email='$email'";
     if (mysqli_query($conn, $updateSql)) {
-        header("Location: admin.php");
+        header("Location: admin.php"); // Redirect back to admin page after successful update
         exit();
     } else {
         echo "Error updating record: " . mysqli_error($conn);
@@ -53,12 +47,12 @@ mysqli_close($conn);
 
 <h2>Edit User Request</h2>
 
-<form action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . $id; ?>" method="POST">
+<form action="<?php echo $_SERVER['PHP_SELF'] . "?id=" . urlencode($email); ?>" method="POST">
     <label for="requestdate">Request Date</label><br>
-    <input type="date" id="requestdate" name="requestdate" value="<?php echo htmlspecialchars($row['requestdate']); ?>" required><br><br>
+    <input type="date" id="requestdate" name="requestdate" value="<?php echo htmlspecialchars($row['app_date']); ?>" required><br><br>
 
     <label for="requesttime">Request Time</label><br>
-    <input type="time" id="requesttime" name="requesttime" value="<?php echo htmlspecialchars($row['requesttime']); ?>" required><br><br>
+    <input type="time" id="requesttime" name="requesttime" value="<?php echo htmlspecialchars($row['app_time']); ?>" required><br><br>
 
     <button type="submit">Update Request</button>
 </form>
