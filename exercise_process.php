@@ -3,11 +3,12 @@ session_start();
 include("database.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $date = $_POST['date'];
-    $weight = $_POST['weight'];
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    $exercise = $_POST['exercise'];
     $userid = $_SESSION['userID'];
 
-    $sql = "INSERT INTO weight (UserID, date, weight) VALUES ('$userid','$date', '$weight')";
+    $sql = "INSERT INTO exercise (UserID, start, end, record) VALUES ('$userid','$start', '$end', '$exercise')";
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
     } else {
@@ -19,5 +20,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 echo "<script>
     alert('New record created successfully');
-    window.location.href='weight.php';
+    window.location.href='exercise.php';
 </script>";

@@ -79,7 +79,7 @@ session_start();
     <label for="date">Date:</label>
     <input type="date" name="date" id="date" required>
     <label for="weight">Weight:</label>
-    <input type="text" name="weight" id="weight" required>
+    <input type="number" name="weight" id="weight" required>
     <input type="submit" value="Submit">
 </form>
 
@@ -89,7 +89,6 @@ session_start();
 
 
 <p> to-do show weight records...</p>
-	<p> to-do </p>
 </div>
 
 <footer>

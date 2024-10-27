@@ -4,10 +4,10 @@ include("database.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $date = $_POST['date'];
-    $weight = $_POST['weight'];
+    $water = $_POST['water'];
     $userid = $_SESSION['userID'];
 
-    $sql = "INSERT INTO weight (UserID, date, weight) VALUES ('$userid','$date', '$weight')";
+    $sql = "INSERT INTO water (UserID, DateTime, ammount) VALUES ('$userid','$date', '$water')";
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
     } else {
@@ -19,5 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 echo "<script>
     alert('New record created successfully');
-    window.location.href='weight.php';
+    window.location.href='water.php';
 </script>";

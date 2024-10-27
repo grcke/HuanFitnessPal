@@ -73,7 +73,18 @@ session_start();
 <div class="water">
 	<h3> Welcome to Huan Fitness Pal, <?php echo $_SESSION['email']; ?>! </h3>
 
-	<p> to-do </p>
+	<form action="water_process.php" method="POST">
+    <label for="date">Date:</label>
+    <input type="datetime-local" name="date" id="date" required>
+    <label for="water"><br>Water Consumption (Liters):</label>
+    <input type="number" name="water" id="water" step=".01" required>
+	<br>
+    <input type="submit" value="Submit">
+	</form>
+
+	<form action="user.php" method="POST">
+			<input type="submit" value="Back">
+	</form>
 </div>
 
 <footer>

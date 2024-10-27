@@ -73,7 +73,20 @@ session_start();
 <div class="exe">
 	<h3> Welcome to Huan Fitness Pal, <?php echo $_SESSION['email']; ?>! </h3>
 
-	<p> to-do </p>
+	<form action="exercise_process.php" method="POST">
+    <label for="start">Start:</label>
+    <input type="datetime-local" name="start" id="start" required>
+	<label for="end">End:</label>
+    <input type="datetime-local" name="end" id="end" required>
+    <label for="exercise"><br>Exercise:</label>
+    <input type="text" name="exercise" id="exercise" required>
+	<br>
+    <input type="submit" value="Submit">
+	</form>
+
+	<form action="user.php" method="POST">
+			<input type="submit" value="Back">
+	</form>
 </div>
 
 <footer>
