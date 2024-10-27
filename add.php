@@ -3,16 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #343a40;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #495057;
+            text-align: center; 
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; 
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .cancel-button {
+            background-color: #dc3545;
+        }
+        .cancel-button:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
 
 <h2>User Request</h2>
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-    <label for="name">Insert Name</label><br>
-    <input type="text" id="name" name="name" required><br><br>
+    <label for="name">Insert Name</label>
+    <input type="text" id="name" name="name" required>
 
-    <label for="email">Select Email</label><br>
+    <label for="email">Select Email</label>
     <select name="email" id="email" required>
         <option value="">Choose an email</option>
         <?php
@@ -29,15 +85,16 @@
             echo "<option value=''>No emails available</option>";
         }
         ?>
-    </select><br><br>
+    </select>
 
-    <label for="requestdate">Date</label><br>
-    <input type="date" id="date" name="requestdate" value="<?= date("Y-m-d") ?>" max="2025-12-31" min="<?= date("Y-m-d") ?>" required><br>
+    <label for="requestdate">Date</label>
+    <input type="date" id="date" name="requestdate" value="<?= date("Y-m-d") ?>" max="2025-12-31" min="<?= date("Y-m-d") ?>" required>
 
-    <label for="requesttime">Time</label><br>
-    <input type="time" id="time" name="requesttime" required><br><br>
+    <label for="requesttime">Time</label>
+    <input type="time" id="time" name="requesttime" required>
 
     <button type="submit" name="confirm">Confirm</button>
+    <button type="button" class="cancel-button" onclick="window.location.href='admin.php';">Cancel</button>
 </form>
 
 <?php
@@ -49,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm'])) {
 
     if (!empty($email) && !empty($name)) {
         $stmt = mysqli_prepare($conn, "INSERT INTO appointment (email, app_date, app_time, name) VALUES (?, ?, ?, ?)");
-        mysqli_stmt_bind_param($stmt, "ssss", $email, $requestdate, $requesttime, $name); // Bind the name parameter
+        mysqli_stmt_bind_param($stmt, "ssss", $email, $requestdate, $requesttime, $name); 
 
         if (mysqli_stmt_execute($stmt)) {
             header("Location: admin.php");

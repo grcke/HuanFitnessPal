@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2024 at 12:33 PM
+-- Generation Time: Oct 27, 2024 at 03:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,9 +40,32 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`name`, `email`, `app_date`, `app_time`, `status`) VALUES
-('John Doe', 'john@example.com', '2024-10-20', '10:01:00', 'admin'),
-('Jane Smith', 'jane@example.com', '2024-10-21', '11:30:00', 'user'),
-('Michael Brown', 'michael@example.com', '2024-10-22', '09:15:00', 'user');
+('John Lee', 'user1@example.com', '2024-10-29', '10:00:00', 'Pending'),
+('Sarah Tay', 'user2@example.com', '2024-11-13', '14:00:00', 'Pending'),
+('Melissa Ng', 'user3@example.com', '2024-10-31', '14:15:00', 'Pending'),
+('Amanda Tan', 'testuser@example.com', '2024-10-27', '12:00:00', 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
+(3, 'John Lee', 'user1@example.com', 'Hello! I noticed that one of the treadmills in the gym isn’t working properly. Could you please look into this? Thank you!', '2024-10-27 14:04:31'),
+(4, 'Sarah Tay', 'user2@example.com', 'I just wanted to say that I love your facility! The equipment is great, but I think it would be helpful to have more group classes. Thanks for providing such a positive environment!', '2024-10-27 14:05:45');
 
 -- --------------------------------------------------------
 
@@ -56,26 +79,6 @@ CREATE TABLE `exercise` (
   `DateTime` datetime NOT NULL,
   `record` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `request`
---
-
-CREATE TABLE `request` (
-  `ID` int(11) NOT NULL,
-  `userID` int(11) DEFAULT NULL,
-  `requestdate` date DEFAULT NULL,
-  `requesttime` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `request`
---
-
-INSERT INTO `request` (`ID`, `userID`, `requestdate`, `requesttime`) VALUES
-(1, NULL, '2024-10-27', '17:20:00');
 
 -- --------------------------------------------------------
 
@@ -97,9 +100,10 @@ CREATE TABLE `userinfo` (
 INSERT INTO `userinfo` (`userID`, `type`, `email`, `password`) VALUES
 (1, 'user', 'testuser@example.com', '$2y$10$Hbsl5CybJeAenKaLY1wrJe.KUqcZwnxtcj6LqLtAsklNhDoFzwLFu'),
 (2, 'admin', 'testadmin@example.com', '$2y$10$440/2O3hYSFxit5y7y3NzOoNKMRrit1.IUKVYV.5Esk32kloVQj0a'),
-(3, 'user', 'abc@gmail.com', '$2y$10$.xs6Tq1aQMJwkBb3vhHMRewQJRbpx0X5mCHIZec.v1c.e5LjZlPWC'),
-(4, 'admin', 'bcd@gmail.com', '$2y$10$zVfUFW0tflPR2DeSXnu/P.aDYxCd/62KRHnott3t50iVt/qJZ8ZwO'),
-(5, 'admin', 'bcs@gmail.com', '$2y$10$5jsTgCdM60I.KcD9Ug.4j.lT5qdlePFl6naF4gZd6XV9qO5bk6R5i');
+(3, 'user', 'user1@example.com', '$2y$10$MCJBVqeXBdG7EjZmFsJOFufrfhqKLQGbVGf.WNRtd33bupbnRhCfG'),
+(4, 'user', 'user2@example.com', '$2y$10$Lgm/DQcOhxG0D/eN3vom/.4h3H96hy7ErfeOs4XhNzimYGZLfzQS6'),
+(5, 'user', 'user3@example.com', '$2y$10$rS9K3EOnsB1eo.mTEf/tFOpgh5huBomcMMpQJGO.FXLgTFJYmZwyC'),
+(6, 'admin', 'admin@example.com', '$2y$10$TNKP44IQiTfrHIb75V/kLO8Zgt4C4cJ3icFV9yVkvVMqVv6Mz6DG6');
 
 -- --------------------------------------------------------
 
@@ -139,18 +143,17 @@ INSERT INTO `weight` (`RecordID`, `UserID`, `Date`, `Weight`) VALUES
 --
 
 --
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `exercise`
 --
 ALTER TABLE `exercise`
   ADD PRIMARY KEY (`RecordID`),
   ADD KEY `UserID` (`UserID`);
-
---
--- Indexes for table `request`
---
-ALTER TABLE `request`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `userinfo`
@@ -178,22 +181,22 @@ ALTER TABLE `weight`
 --
 
 --
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `exercise`
 --
 ALTER TABLE `exercise`
   MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `request`
---
-ALTER TABLE `request`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `userinfo`
 --
 ALTER TABLE `userinfo`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `water`
@@ -216,12 +219,6 @@ ALTER TABLE `weight`
 --
 ALTER TABLE `exercise`
   ADD CONSTRAINT `exercise_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `userinfo` (`userID`);
-
---
--- Constraints for table `request`
---
-ALTER TABLE `request`
-  ADD CONSTRAINT `request_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `userinfo` (`userID`);
 
 --
 -- Constraints for table `water`

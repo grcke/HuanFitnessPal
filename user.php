@@ -94,6 +94,10 @@ session_start();
 			<input type="submit" value="Book Appointment with Nutritionist">
 	</form>
 
+	<form action="contact.php" method="POST">
+			<input type="submit" value="Contact Us">
+	</form>
+
 	<form action="logout.php" method="POST">
 			<input type="submit" value="Logout">
 	</form>
