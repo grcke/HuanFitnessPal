@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2024 at 09:14 AM
+-- Generation Time: Oct 27, 2024 at 12:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `hfp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment`
+--
+
+CREATE TABLE `appointment` (
+  `name` varchar(225) NOT NULL,
+  `email` varchar(225) NOT NULL,
+  `app_date` date NOT NULL,
+  `app_time` time NOT NULL,
+  `status` varchar(225) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appointment`
+--
+
+INSERT INTO `appointment` (`name`, `email`, `app_date`, `app_time`, `status`) VALUES
+('John Doe', 'john@example.com', '2024-10-20', '10:01:00', 'admin'),
+('Jane Smith', 'jane@example.com', '2024-10-21', '11:30:00', 'user'),
+('Michael Brown', 'michael@example.com', '2024-10-22', '09:15:00', 'user');
 
 -- --------------------------------------------------------
 
@@ -47,6 +70,13 @@ CREATE TABLE `request` (
   `requesttime` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `request`
+--
+
+INSERT INTO `request` (`ID`, `userID`, `requestdate`, `requesttime`) VALUES
+(1, NULL, '2024-10-27', '17:20:00');
+
 -- --------------------------------------------------------
 
 --
@@ -66,7 +96,10 @@ CREATE TABLE `userinfo` (
 
 INSERT INTO `userinfo` (`userID`, `type`, `email`, `password`) VALUES
 (1, 'user', 'testuser@example.com', '$2y$10$Hbsl5CybJeAenKaLY1wrJe.KUqcZwnxtcj6LqLtAsklNhDoFzwLFu'),
-(2, 'admin', 'testadmin@example.com', '$2y$10$440/2O3hYSFxit5y7y3NzOoNKMRrit1.IUKVYV.5Esk32kloVQj0a');
+(2, 'admin', 'testadmin@example.com', '$2y$10$440/2O3hYSFxit5y7y3NzOoNKMRrit1.IUKVYV.5Esk32kloVQj0a'),
+(3, 'user', 'abc@gmail.com', '$2y$10$.xs6Tq1aQMJwkBb3vhHMRewQJRbpx0X5mCHIZec.v1c.e5LjZlPWC'),
+(4, 'admin', 'bcd@gmail.com', '$2y$10$zVfUFW0tflPR2DeSXnu/P.aDYxCd/62KRHnott3t50iVt/qJZ8ZwO'),
+(5, 'admin', 'bcs@gmail.com', '$2y$10$5jsTgCdM60I.KcD9Ug.4j.lT5qdlePFl6naF4gZd6XV9qO5bk6R5i');
 
 -- --------------------------------------------------------
 
@@ -154,13 +187,13 @@ ALTER TABLE `exercise`
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `userinfo`
 --
 ALTER TABLE `userinfo`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `water`

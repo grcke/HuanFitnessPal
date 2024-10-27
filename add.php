@@ -8,15 +8,16 @@
 
 <h2>User Request</h2>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-    <!-- Dropdown to select an email from the database -->
+<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+    <label for="name">Insert Name</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
     <label for="email">Select Email</label><br>
     <select name="email" id="email" required>
         <option value="">Choose an email</option>
         <?php
         include("database.php");
-        
-        // Fetch emails with type 'user' from the userinfo table
+
         $emailQuery = "SELECT DISTINCT email FROM userinfo WHERE type = 'user'";
         $emailResult = mysqli_query($conn, $emailQuery);
 
@@ -41,21 +42,25 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm'])) {
-    $requestdate = mysqli_real_escape_string($conn, $_POST['requestdate']);
-    $requesttime = mysqli_real_escape_string($conn, $_POST['requesttime']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $requestdate = $_POST['requestdate'];
+    $requesttime = $_POST['requesttime'];
+    $email = $_POST['email'];
+    $name = $_POST['name'];
 
-    if (!empty($email)) {
-        $sql = "INSERT INTO appointment (email, app_date, app_time) VALUES ('$email', '$requestdate', '$requesttime')";
+    if (!empty($email) && !empty($name)) {
+        $stmt = mysqli_prepare($conn, "INSERT INTO appointment (email, app_date, app_time, name) VALUES (?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "ssss", $email, $requestdate, $requesttime, $name); // Bind the name parameter
 
-        if (mysqli_query($conn, $sql)) {
+        if (mysqli_stmt_execute($stmt)) {
             header("Location: admin.php");
             exit();
         } else {
             echo "Error: " . mysqli_error($conn);
         }
+
+        mysqli_stmt_close($stmt);
     } else {
-        echo "Please select a valid email.";
+        echo "Please select a valid email and insert your name.";
     }
 
     mysqli_close($conn);

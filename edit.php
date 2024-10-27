@@ -2,16 +2,14 @@
 session_start();
 include("database.php");
 
-// Check if `id` (email) is provided in the URL
 if (isset($_GET['id'])) {
-    $email = mysqli_real_escape_string($conn, $_GET['id']); // Sanitize the email
+    $email = mysqli_real_escape_string($conn, $_GET['id']);
 
-    // Retrieve the existing data for the specified email
     $sql = "SELECT * FROM appointment WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result); // Fetch the record for display
+        $row = mysqli_fetch_assoc($result); 
     } else {
         die("Record not found.");
     }
@@ -19,15 +17,13 @@ if (isset($_GET['id'])) {
     die("No email provided.");
 }
 
-// Handle form submission for updating the record
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requestdate = mysqli_real_escape_string($conn, $_POST['requestdate']);
     $requesttime = mysqli_real_escape_string($conn, $_POST['requesttime']);
 
-    // Update the record with the new values
     $updateSql = "UPDATE appointment SET app_date='$requestdate', app_time='$requesttime' WHERE email='$email'";
     if (mysqli_query($conn, $updateSql)) {
-        header("Location: admin.php"); // Redirect back to admin page after successful update
+        header("Location: admin.php");
         exit();
     } else {
         echo "Error updating record: " . mysqli_error($conn);
