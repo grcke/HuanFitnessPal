@@ -168,13 +168,14 @@ function getAppointmentCount($email) {
                     <input type="email" id="email" name="email" value="<?php echo $_SESSION['email']; ?>" placeholder="Enter your email" disabled>
 
                     <label for="date">Date:</label>
-                    <input type="date" id="date" name="date" required>
+                    <input type="date" id="date" name="date" min="<?php echo date('Y-m-d'); ?>" required>
 
                     <label for="time">Time:</label>
                     <input type="time" id="time" name="time" required>
 
                     <input type="submit" value="Schedule Meetup">
                     <input type="button" onclick="openPopup()" value="Track Request Status">
+                    <input type="button" onclick="window.location.href='user.php'" value="Back">
                 </form>
             </div>
 
