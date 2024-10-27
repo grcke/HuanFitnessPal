@@ -36,8 +36,8 @@ if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
 }
 
+mysqli_close($conn);
+
 header("Location: contact.php");
 exit();
-
-mysqli_close($conn);
 ?>
