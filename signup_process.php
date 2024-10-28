@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_SESSION['success'] = "User registered successfully!";
             $_SESSION['email'] = $email;
             $_SESSION['user_type'] = $type;
+            $_SESSION['userID'] = mysqli_insert_id($conn);
 
             if ($type === 'admin') {
                 header("Location: admin.php"); // redirect to admin page ! UPDATE !

@@ -10,13 +10,13 @@ $query = '';
 // Determine the table, columns, and query based on the `type` parameter
 if ($dbname === 'weight') {
     $tableHeaders = ['Date', 'Weight'];
-    $query = "SELECT date, weight FROM weight";
+    $query = "SELECT date, weight FROM weight where userID = $userid";
 } elseif ($dbname === 'water') {
     $tableHeaders = ['DateTime', 'Amount'];
-    $query = "SELECT DateTime, ammount FROM water";
+    $query = "SELECT DateTime, ammount FROM water where userID = $userid";
 } elseif ($dbname === 'exercise') {
     $tableHeaders = ['Start', 'End', 'Record'];
-    $query = "SELECT start, end, record FROM exercise";
+    $query = "SELECT start, end, record FROM exercise where userID = $userid";
 } else {
     echo "Invalid request type.";
     $mysqli->close();
