@@ -2,6 +2,13 @@
 <html>
 <head>
 <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding-bottom: 60px; /* Adjust this value to the height of the footer */
+        box-sizing: border-box;
+    }
+
     header {
         right: 0;
         left: 0;
@@ -17,7 +24,6 @@
     body {
         background-image: url('https://st4.depositphotos.com/1022135/25748/i/450/depositphotos_257486682-stock-photo-group-young-people-sportswear-talking.jpg');
         background-size: cover;
-        margin: 0;
     }
     
     .admin-panel {
@@ -31,6 +37,7 @@
         font-size: 1.1em;
         border-style: ridge;
         overflow: hidden;
+        padding-bottom: 80px; /* Space for the footer */
     }
 
     h2, h3 {
@@ -123,17 +130,16 @@
     }
 
     footer {
-        right: 0;
-        left: 0;
         text-align: center;
         color: white; 
         background: #405dde;
         border-style: ridge;
         padding-top: 20px;
         padding-bottom: 20px;
-        position: sticky;
+        position: fixed; /* Fixed position */
         bottom: 0;
-        width: 100%;
+        left: 0;
+        right: 0;
         z-index: 10;
     }
 </style>
@@ -170,30 +176,31 @@
             <select name="status">
                 <option value="">-- Select Status --</option>
                 <option value="Pending" <?php echo (isset($_GET['status']) && $_GET['status'] === 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                <option value="Complete" <?php echo (isset($_GET['status']) && $_GET['status'] === 'Complete') ? 'selected' : ''; ?>>Complete</option>
+                <option value="Completed" <?php echo (isset($_GET['status']) && $_GET['status'] === 'Completed') ? 'selected' : ''; ?>>Completed</option>
             </select>
             <button type="submit">Filter</button>
         </form>
         <?php
 
         $filters = [];
-        if (!empty($_GET['search'])) {
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
             $filtervalues = mysqli_real_escape_string($conn, $_GET['search']);
             $filters[] = "CONCAT(name, email) LIKE '%$filtervalues%'";
         }
-        if (!empty($_GET['request_date'])) {
+        if (isset($_GET['request_date']) && !empty($_GET['request_date'])) {
             $request_date = mysqli_real_escape_string($conn, $_GET['request_date']);
             $filters[] = "app_date = '$request_date'";
         }
-        if (!empty($_GET['request_time'])) {
+        if (isset($_GET['request_time']) && !empty($_GET['request_time'])) {
             $request_time = mysqli_real_escape_string($conn, $_GET['request_time']);
             $filters[] = "app_time = '$request_time'";
         }
-        if (!empty($_GET['status'])) {
+        if (isset($_GET['status']) && !empty($_GET['status'])) {
             $status = mysqli_real_escape_string($conn, $_GET['status']);
             $filters[] = "status = '$status'";
         }
 
+        // fetch appointments
         $filterQuery = count($filters) > 0 ? " WHERE " . implode(" AND ", $filters) : '';
         $sql = "SELECT * FROM appointment" . $filterQuery;
         $result = mysqli_query($conn, $sql);
