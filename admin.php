@@ -12,6 +12,11 @@ if (isset($_SESSION['email'])) {
             <button type="submit">Search</button>
             <input type="date" name="request_date" value="' . (isset($_GET['request_date']) ? htmlspecialchars($_GET['request_date']) : '') . '">
             <input type="time" name="request_time" value="' . (isset($_GET['request_time']) ? htmlspecialchars($_GET['request_time']) : '') . '">
+            <select name="status">
+            <option value="">-- Select Status --</option>
+            <option value="Pending"' . (isset($_GET['status']) && $_GET['status'] === 'Pending' ? ' selected' : '') . '>Pending</option>
+            <option value="Complete"' . (isset($_GET['status']) && $_GET['status'] === 'Complete' ? ' selected' : '') . '>Complete</option>
+            </select>
             <button type="submit">Filter</button>
           </form>';
 
@@ -27,6 +32,10 @@ if (isset($_SESSION['email'])) {
     if (isset($_GET['request_time']) && !empty($_GET['request_time'])) {
         $request_time = mysqli_real_escape_string($conn, $_GET['request_time']);
         $filters[] = "app_time = '$request_time'";
+    }
+    if (isset($_GET['status']) && !empty($_GET['status'])) {
+        $status = mysqli_real_escape_string($conn, $_GET['status']);
+        $filters[] = "status = '$status'";
     }
 
     // fetch appointments
