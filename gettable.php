@@ -1,4 +1,5 @@
 <?php
+session_start();
 $userid = $_SESSION['userID'];
 $dbname = $_POST['dbname'];
 
@@ -7,24 +8,27 @@ $mysqli = new mysqli("localhost", "root", "", "hfp");
 $tableHeaders = [];
 $query = '';
 
-// Determine the table, columns, and query based on the `type` parameter
+// Determine the table, columns, and query based on the `dbname` parameter
 if ($dbname === 'weight') {
-    $tableHeaders = ['Date', 'Weight'];
-    $query = "SELECT date, weight FROM weight where userID = $userid";
+    $tableHeaders = ['Index','Date', 'Weight'];
+    $query = "SELECT RecordID, date, weight FROM weight WHERE userid = ?";
 } elseif ($dbname === 'water') {
-    $tableHeaders = ['DateTime', 'Amount'];
-    $query = "SELECT DateTime, ammount FROM water where userID = $userid";
+    $tableHeaders = ['Index','DateTime', 'Amount'];
+    $query = "SELECT RecordID, DateTime, ammount FROM water WHERE userid = ?";
 } elseif ($dbname === 'exercise') {
-    $tableHeaders = ['Start', 'End', 'Record'];
-    $query = "SELECT start, end, record FROM exercise where userID = $userid";
+    $tableHeaders = ['Index','Start', 'End', 'Record'];
+    $query = "SELECT RecordID, start, end, record FROM exercise WHERE userid = ?";
 } else {
     echo "Invalid request type.";
     $mysqli->close();
     exit;
 }
 
-// Execute the query and fetch results
-$result = $mysqli->query($query);
+// Prepare and execute the query
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param("i", $userid);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Check for query success
 if ($result && $result->num_rows > 0) {
@@ -34,6 +38,7 @@ if ($result && $result->num_rows > 0) {
     foreach ($tableHeaders as $header) {
         echo "<th>{$header}</th>";
     }
+    echo "<th>Actions</th>"; // Add Actions column header
     echo "</tr>";
 
     while ($row = $result->fetch_assoc()) {
@@ -41,6 +46,11 @@ if ($result && $result->num_rows > 0) {
         foreach ($row as $column) {
             echo "<td>{$column}</td>";
         }
+        echo "<td>";
+        // Use RecordID for the edit and delete actions
+        echo "<a href='editdb.php?recordid={$row['RecordID']}&db={$dbname}'>Edit</a> | ";
+        echo "<a href='delrec.php?recordid={$row['RecordID']}&db={$dbname}'>Delete</a>";
+        echo "</td>";
         echo "</tr>";
     }
     echo "</table>";
@@ -49,7 +59,6 @@ if ($result && $result->num_rows > 0) {
 }
 
 // Close the database connection
+$stmt->close();
 $mysqli->close();
 ?>
-
-
