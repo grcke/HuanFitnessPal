@@ -23,11 +23,7 @@ body{
 	left: 0;
 }
 
-/*
-Actual magic with 1% height and hidden overflow
-which allows the div to expand with the content.
-*/
-.user{
+.news{
 	width: 50%;
 	height: 1%;
 	background: #c4d7f5;
@@ -44,7 +40,6 @@ which allows the div to expand with the content.
 input{
 	height: 40px;
 	width: 250px;
-	font-size: 75%;
 }
 
 footer{
@@ -57,13 +52,11 @@ footer{
 	margin: 0 auto;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	position: fixed;
 	bottom: 0;
 	border-style: ridge;
 }
 
 </style>
-
 
 <?php
 session_start();
@@ -75,36 +68,17 @@ session_start();
 	<h4 style="font-size: 20px"><i>For all your fitness needs...</i></h4>
 </header>
 
-<div class="user">
+<!--page functions within this div here-->
+<div class="news">
 	<h3> Welcome to Huan Fitness Pal, <?php echo $_SESSION['email']; ?>! </h3>
-
-	<form action="weight.php" method="POST">
-			<input type="submit" value="Body Weight Records">
+    <p> Check out the latest news from our partners here... </p>
+    <form action="user.php" method="POST">
+			<input type="submit" value="Back to Main Menu">
 	</form>
 
-	<form action="exercise.php" method="POST">
-			<input type="submit" value="Exercise Records">
-	</form>
+    <script src="https://static.elfsight.com/platform/platform.js" async></script>
+    <div class="elfsight-app-62bc27ad-714f-4bf2-a487-2e3d21fc13d2" data-elfsight-app-lazy></div>
 
-	<form action="water.php" method="POST">
-			<input type="submit" value="Water Consumption Records">
-	</form>
-
-	<form action="nutritionist.php" method="POST">
-			<input type="submit" value="Book Appointment with Nutritionist">
-	</form>
-
-	<form action="contact.php" method="POST">
-			<input type="submit" value="Contact Us">
-	</form>
-
-	<form action="news.php" method="POST">
-			<input type="submit" value="News">
-	</form>
-
-	<form action="logout.php" method="POST">
-			<input type="submit" value="Logout">
-	</form>
 </div>
 
 <footer>
