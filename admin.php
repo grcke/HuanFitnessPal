@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    include 'database.php';
+
+    if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
+        header("Location: Homepage.php");
+        exit();
+    }
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,20 +14,16 @@
     html, body {
         height: 100%;
         margin: 0;
-        padding-bottom: 60px; /* Adjust this value to the height of the footer */
+        padding-bottom: 70px; 
         box-sizing: border-box;
     }
 
     header {
-        right: 0;
-        left: 0;
         text-align: center;
         color: white;
         background: #405dde;
         border-style: ridge;
-        margin: 0;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding: 20px;
     }
     
     body {
@@ -37,7 +42,7 @@
         font-size: 1.1em;
         border-style: ridge;
         overflow: hidden;
-        padding-bottom: 80px; /* Space for the footer */
+        padding-bottom: 150px; 
     }
 
     h2, h3 {
@@ -129,18 +134,98 @@
         background-color: #0056b3;
     }
 
+    .pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    }
+
+    .pagination a {
+    margin: 0 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: #0056b3;
+    }
+
+    .pagination strong {
+        margin: 0 10px;
+        padding: 8px 12px;
+        background-color: #6c757d;
+        color: white; 
+        border-radius: 4px;
+    }
+
     footer {
         text-align: center;
         color: white; 
         background: #405dde;
         border-style: ridge;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        position: fixed; /* Fixed position */
+        padding: 20px 0;
+        position: fixed; 
         bottom: 0;
         left: 0;
         right: 0;
         z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+        .admin-panel {
+            width: 95%;
+            padding: 15px;
+            padding-bottom: 150px;
+            font-size: 1em;
+        }
+
+        .search-form input, .search-form button, .add-form button, .logout-form button, .search-form select {
+            padding: 8px;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .action-buttons form {
+            margin-top: 10px;
+            display: block;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header h1 {
+            font-size: 32px;
+        }
+
+        header h4 {
+            font-size: 16px;
+        }
+
+        .search-form input, .search-form select {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 8px;
+            font-size: 12px;
+        }
+        
+        .search-form, .add-form, .logout-form {
+            margin: 10px 0;
+        }
+
+        .admin-panel {
+            padding: 10px;
+        }
     }
 </style>
 </head>
@@ -152,21 +237,12 @@
 </header>
 
 <div class="admin-panel">
-    <?php
-    session_start();
-    include 'database.php';
-
-    if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
-        header("Location: Homepage.php");
-        exit();
-    }
-
+<?php
     if (isset($_SESSION['email'])) {
         $userEmail = htmlspecialchars($_SESSION['email']);
         echo "<h2>Admin Control Panel</h2>";
         echo "<h3>You are currently logged in as: $userEmail</h3>";
 
-        // search and filter form
         ?>
         <form action="" method="GET" class="search-form">
             <input type="text" name="search" placeholder="Search by Name or Email" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
@@ -181,6 +257,10 @@
             <button type="submit">Filter</button>
         </form>
         <?php
+
+        $itemsPerPage = 4;
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($currentPage - 1) * $itemsPerPage;
 
         $filters = [];
         if (isset($_GET['search']) && !empty($_GET['search'])) {
@@ -200,12 +280,15 @@
             $filters[] = "status = '$status'";
         }
 
-        // fetch appointments
         $filterQuery = count($filters) > 0 ? " WHERE " . implode(" AND ", $filters) : '';
-        $sql = "SELECT * FROM appointment" . $filterQuery;
+        $countSql = "SELECT COUNT(*) as total FROM appointment" . $filterQuery;
+        $countResult = mysqli_query($conn, $countSql);
+        $totalRows = mysqli_fetch_assoc($countResult)['total'];
+        $totalPages = ceil($totalRows / $itemsPerPage);
+
+        $sql = "SELECT * FROM appointment" . $filterQuery . " LIMIT $itemsPerPage OFFSET $offset";
         $result = mysqli_query($conn, $sql);
 
-        // display appointments
         ?>
         <table class="data-table" style="width:100%; border-collapse:collapse; margin-top:20px; background-color:#fff;">
             <tr>
@@ -248,15 +331,35 @@
         ?>
         </table>
 
+        <div class="pagination">
+            <?php
+            for ($page = 1; $page <= $totalPages; $page++) {
+                if ($page == $currentPage) {
+                    echo "<strong>$page</strong> ";
+                } else {
+                    echo "<a href='?page=$page" . (isset($_GET['search']) ? "&search=" . htmlspecialchars($_GET['search']) : "") . (isset($_GET['request_date']) ? "&request_date=" . htmlspecialchars($_GET['request_date']) : "") . (isset($_GET['request_time']) ? "&request_time=" . htmlspecialchars($_GET['request_time']) : "") . (isset($_GET['status']) ? "&status=" . htmlspecialchars($_GET['status']) : "") . "'>$page</a> ";
+                }
+            }
+            ?>
+        </div>
+
         <form action="add.php" method="GET" class="add-form">
             <button type="submit">Add New Appointment</button>
         </form>
 
-        <!-- display user messages -->
         <h3>User Messages</h3>
         <?php
-        $messageQuery = "SELECT * FROM contact_messages ORDER BY created_at DESC";
-        $messageResult = mysqli_query($conn, $messageQuery);
+        $messageItemsPerPage = 4; 
+        $messageCurrentPage = isset($_GET['msg_page']) ? (int)$_GET['msg_page'] : 1;
+        $messageOffset = ($messageCurrentPage - 1) * $messageItemsPerPage;
+
+        $messageCountSql = "SELECT COUNT(*) as total FROM contact_messages";
+        $messageCountResult = mysqli_query($conn, $messageCountSql);
+        $messageTotalRows = mysqli_fetch_assoc($messageCountResult)['total'];
+        $messageTotalPages = ceil($messageTotalRows / $messageItemsPerPage);
+
+        $messageSql = "SELECT * FROM contact_messages ORDER BY created_at DESC LIMIT $messageItemsPerPage OFFSET $messageOffset";
+        $messageResult = mysqli_query($conn, $messageSql);
         ?>
         <table class="data-table" style="width:100%; border-collapse:collapse; margin-top:20px; background-color:#fff;">
             <tr>
@@ -288,6 +391,18 @@
         }
         ?>
         </table>
+
+        <div class="pagination">
+            <?php
+            for ($msgPage = 1; $msgPage <= $messageTotalPages; $msgPage++) {
+                if ($msgPage == $messageCurrentPage) {
+                    echo "<strong>$msgPage</strong> ";
+                } else {
+                    echo "<a href='?msg_page=$msgPage'>".$msgPage."</a> ";
+                }
+            }
+            ?>
+        </div>
 
         <form action="logout.php" method="POST" class="logout-form">
             <button type="submit">Logout</button>

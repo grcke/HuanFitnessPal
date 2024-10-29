@@ -9,6 +9,7 @@
             background-size: cover;
             margin: 0;
             padding: 0;
+            padding-bottom: 150px;
         }
         header {
             right: 0;
@@ -23,12 +24,12 @@
         }
         .urequest-panel {
             width: 80%;
-            max-width: 1000px;
+            max-width: 600px;
             background: rgba(255, 255, 255, 0.9);
             color: black;
             text-align: center;
-            padding: 40px;
             margin: 50px auto;
+            padding: 10px;
             font-size: 1.1em;
             border-style: ridge;
             border-width: 2px;
@@ -71,18 +72,17 @@
             background-color: #364cb1;
         }
         footer {
-            right: 0;
-            left: 0;
             text-align: center;
             color: white; 
             background: #405dde;
             border-style: ridge;
-            margin: 0 auto;
             padding-top: 20px;
             padding-bottom: 20px;
-            position: fixed;
+            position: fixed; 
             bottom: 0;
-            border-style: ridge;
+            left: 0;
+            right: 0;
+            z-index: 10;
         }
     </style>
 </head>
