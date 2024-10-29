@@ -78,11 +78,17 @@ INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) 
 CREATE TABLE `exercise` (
   `RecordID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `DateTime` datetime NOT NULL,
-  `record` varchar(255) NOT NULL,
   `start` datetime NOT NULL,
-  `end` datetime NOT NULL
+  `end` datetime NOT NULL,
+  `record` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exercise`
+--
+
+INSERT INTO `exercise` (`RecordID`, `UserID`, `start`, `end`, `record`) VALUES
+(1, 1, '2024-10-27 10:10:00', '2024-10-27 11:11:00', 'Weight Lifting');
 
 -- --------------------------------------------------------
 
@@ -124,6 +130,14 @@ CREATE TABLE `water` (
   `ammount` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `water`
+--
+
+INSERT INTO `water` (`RecordID`, `UserID`, `DateTime`, `ammount`) VALUES
+(1, 1, '2024-10-27 11:11:00', 1.1),
+(2, 1, '2024-10-27 12:12:00', 2.44);
+
 -- --------------------------------------------------------
 
 --
@@ -142,7 +156,9 @@ CREATE TABLE `weight` (
 --
 
 INSERT INTO `weight` (`RecordID`, `UserID`, `Date`, `Weight`) VALUES
-(1, 1, '2024-10-26', 88);
+(1, 1, '2024-10-26', 88),
+(2, 1, '2024-10-26', 12),
+(3, 3, '2024-10-31', 222);
 
 --
 -- Indexes for dumped tables
@@ -196,7 +212,7 @@ ALTER TABLE `contact_messages`
 -- AUTO_INCREMENT for table `exercise`
 --
 ALTER TABLE `exercise`
-  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `userinfo`
@@ -208,13 +224,13 @@ ALTER TABLE `userinfo`
 -- AUTO_INCREMENT for table `water`
 --
 ALTER TABLE `water`
-  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `weight`
 --
 ALTER TABLE `weight`
-  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
