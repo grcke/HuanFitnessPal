@@ -1,5 +1,4 @@
 <?php
-session_start();
 $userid = $_SESSION['userID'];
 $dbname = $_POST['dbname'];
 
@@ -10,13 +9,13 @@ $query = '';
 
 // Determine the table, columns, and query based on the `dbname` parameter
 if ($dbname === 'weight') {
-    $tableHeaders = ['Index','Date', 'Weight'];
+    $tableHeaders = ['Date', 'Weight'];
     $query = "SELECT RecordID, date, weight FROM weight WHERE userid = ?";
 } elseif ($dbname === 'water') {
-    $tableHeaders = ['Index','DateTime', 'Amount'];
+    $tableHeaders = ['DateTime', 'Amount'];
     $query = "SELECT RecordID, DateTime, ammount FROM water WHERE userid = ?";
 } elseif ($dbname === 'exercise') {
-    $tableHeaders = ['Index','Start', 'End', 'Record'];
+    $tableHeaders = ['Start', 'End', 'Record'];
     $query = "SELECT RecordID, start, end, record FROM exercise WHERE userid = ?";
 } else {
     echo "Invalid request type.";
@@ -43,13 +42,15 @@ if ($result && $result->num_rows > 0) {
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        foreach ($row as $column) {
-            echo "<td>{$column}</td>";
+        foreach ($row as $key => $column) {
+            if ($key !== 'RecordID') { // Skip RecordID in the displayed columns
+                echo "<td>{$column}</td>";
+            }
         }
         echo "<td>";
         // Use RecordID for the edit and delete actions
         echo "<a href='editdb.php?recordid={$row['RecordID']}&db={$dbname}'>Edit</a> | ";
-        echo "<a href='delrec.php?recordid={$row['RecordID']}&db={$dbname}'>Delete</a>";
+        echo "<a href='delrec.php?recordid={$row['RecordID']}&db={$dbname}' onclick='return confirm(\"Are you sure?\");'>Delete</a>";
         echo "</td>";
         echo "</tr>";
     }
