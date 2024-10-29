@@ -64,6 +64,7 @@ select{
 }
 
 footer{
+	position: fixed; 
 	right: 0;
 	left: 0;
 	text-align: center;

@@ -163,6 +163,7 @@
     }
 
     footer {
+        position: fixed; 
         text-align: center;
         color: white; 
         background: #405dde;
