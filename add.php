@@ -78,7 +78,6 @@
             border-style: ridge;
             padding-top: 20px;
             padding-bottom: 20px;
-            position: fixed; 
             bottom: 0;
             left: 0;
             right: 0;

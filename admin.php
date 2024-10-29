@@ -167,8 +167,7 @@
         color: white; 
         background: #405dde;
         border-style: ridge;
-        padding: 20px 0;
-        position: fixed; 
+        padding: 20px 0; 
         bottom: 0;
         left: 0;
         right: 0;

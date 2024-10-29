@@ -56,7 +56,6 @@ footer{
 	margin: 0 auto;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	position: fixed;
 	bottom: 0;
 	border-style: ridge;
 }
