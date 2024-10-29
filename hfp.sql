@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2024 at 05:54 AM
+-- Generation Time: Oct 29, 2024 at 06:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,23 +28,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `appointment` (
-  `name` varchar(225) NOT NULL,
-  `email` varchar(225) NOT NULL,
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `app_date` date NOT NULL,
   `app_time` time NOT NULL,
-  `status` varchar(225) NOT NULL
+  `status` varchar(50) DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`name`, `email`, `app_date`, `app_time`, `status`) VALUES
-('John Lee', 'user1@example.com', '2024-10-29', '10:00:00', 'Pending'),
-('Sarah Tay', 'user2@example.com', '2024-11-13', '14:00:00', 'Pending'),
-('Melissa Ng', 'user3@example.com', '2024-10-31', '14:15:00', 'Completed'),
-('Amanda Tan', 'testuser@example.com', '2024-10-27', '12:00:00', 'Pending'),
-('Toby Tan', 'user4@example.com', '2024-11-06', '12:50:00', 'Pending');
+INSERT INTO `appointment` (`id`, `name`, `email`, `app_date`, `app_time`, `status`) VALUES
+(1, 'Test User 1', 'testuser@example.com', '2024-10-29', '11:11:00', 'Pending'),
+(2, 'Test User 2', 'testuser2@example.com', '2024-10-31', '12:12:00', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -65,9 +63,7 @@ CREATE TABLE `contact_messages` (
 --
 
 INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
-(3, 'John Lee', 'user1@example.com', 'Hello! I noticed that one of the treadmills in the gym isn’t working properly. Could you please look into this? Thank you!', '2024-10-27 14:04:31'),
-(4, 'Sarah Tay', 'user2@example.com', 'I just wanted to say that I love your facility! The equipment is great, but I think it would be helpful to have more group classes. Thanks for providing such a positive environment!', '2024-10-27 14:05:45'),
-(5, 'Jenny Leong', 'user5@example.com', 'Hello! I’m considering joining your fitness center, but I want to understand your cancellation policy. Could you provide some details on this?', '2024-10-29 04:53:47');
+(2, 'Test User 1', 'testuser@example.com', 'testing', '2024-10-29 05:38:42');
 
 -- --------------------------------------------------------
 
@@ -88,7 +84,8 @@ CREATE TABLE `exercise` (
 --
 
 INSERT INTO `exercise` (`RecordID`, `UserID`, `start`, `end`, `record`) VALUES
-(1, 1, '2024-10-27 10:10:00', '2024-10-27 11:11:00', 'Weight Lifting');
+(1, 1, '2024-10-27 10:10:00', '2024-10-27 11:11:00', 'Weight Lifting'),
+(2, 4, '2024-10-31 11:11:00', '2024-10-31 12:22:00', 'Swimming');
 
 -- --------------------------------------------------------
 
@@ -110,12 +107,8 @@ CREATE TABLE `userinfo` (
 INSERT INTO `userinfo` (`userID`, `type`, `email`, `password`) VALUES
 (1, 'user', 'testuser@example.com', '$2y$10$Hbsl5CybJeAenKaLY1wrJe.KUqcZwnxtcj6LqLtAsklNhDoFzwLFu'),
 (2, 'admin', 'testadmin@example.com', '$2y$10$440/2O3hYSFxit5y7y3NzOoNKMRrit1.IUKVYV.5Esk32kloVQj0a'),
-(3, 'user', 'user1@example.com', '$2y$10$MCJBVqeXBdG7EjZmFsJOFufrfhqKLQGbVGf.WNRtd33bupbnRhCfG'),
-(4, 'user', 'user2@example.com', '$2y$10$Lgm/DQcOhxG0D/eN3vom/.4h3H96hy7ErfeOs4XhNzimYGZLfzQS6'),
-(5, 'user', 'user3@example.com', '$2y$10$rS9K3EOnsB1eo.mTEf/tFOpgh5huBomcMMpQJGO.FXLgTFJYmZwyC'),
-(6, 'admin', 'admin@example.com', '$2y$10$TNKP44IQiTfrHIb75V/kLO8Zgt4C4cJ3icFV9yVkvVMqVv6Mz6DG6'),
-(7, 'user', 'user4@example.com', '$2y$10$A66JrM31eMiJ6q8dci6.n.KkAzCy.qQ87rA/qQKEOQLTesDV4Q0HK'),
-(8, 'user', 'user5@example.com', '$2y$10$i6ir8voCHC5KY1D3c2LbEeGAj7ZtBz5RoA1BgsgvDicJucrBwmNha');
+(3, 'user', 'testuser2@example.com', '$2y$10$KLB4m/LPNlwl3jqEY5JpCuY.SDKFlo/74IAX2Z0wjEbeZVuNIuXLS'),
+(4, 'user', 'testuser3@example.com', '$2y$10$tLeNcGhvhDpb85HlNjkdc.m358SBCmvFYEGFlJwdRbGf.qKb9Rfzm');
 
 -- --------------------------------------------------------
 
@@ -136,7 +129,9 @@ CREATE TABLE `water` (
 
 INSERT INTO `water` (`RecordID`, `UserID`, `DateTime`, `ammount`) VALUES
 (1, 1, '2024-10-27 11:11:00', 1.1),
-(2, 1, '2024-10-27 12:12:00', 2.44);
+(2, 1, '2024-10-27 12:12:00', 2.44),
+(3, 3, '2024-10-31 12:12:00', 12),
+(5, 4, '1111-11-11 11:11:00', 12);
 
 -- --------------------------------------------------------
 
@@ -158,11 +153,18 @@ CREATE TABLE `weight` (
 INSERT INTO `weight` (`RecordID`, `UserID`, `Date`, `Weight`) VALUES
 (1, 1, '2024-10-26', 88),
 (2, 1, '2024-10-26', 12),
-(3, 3, '2024-10-31', 222);
+(3, 3, '2024-10-31', 222),
+(6, 4, '2024-10-15', 123);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `appointment`
+--
+ALTER TABLE `appointment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `contact_messages`
@@ -203,34 +205,40 @@ ALTER TABLE `weight`
 --
 
 --
+-- AUTO_INCREMENT for table `appointment`
+--
+ALTER TABLE `appointment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `exercise`
 --
 ALTER TABLE `exercise`
-  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `userinfo`
 --
 ALTER TABLE `userinfo`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `water`
 --
 ALTER TABLE `water`
-  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `weight`
 --
 ALTER TABLE `weight`
-  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `RecordID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
