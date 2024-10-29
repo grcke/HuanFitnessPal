@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2024 at 03:16 PM
+-- Generation Time: Oct 29, 2024 at 05:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,8 +42,9 @@ CREATE TABLE `appointment` (
 INSERT INTO `appointment` (`name`, `email`, `app_date`, `app_time`, `status`) VALUES
 ('John Lee', 'user1@example.com', '2024-10-29', '10:00:00', 'Pending'),
 ('Sarah Tay', 'user2@example.com', '2024-11-13', '14:00:00', 'Pending'),
-('Melissa Ng', 'user3@example.com', '2024-10-31', '14:15:00', 'Pending'),
-('Amanda Tan', 'testuser@example.com', '2024-10-27', '12:00:00', 'Pending');
+('Melissa Ng', 'user3@example.com', '2024-10-31', '14:15:00', 'Completed'),
+('Amanda Tan', 'testuser@example.com', '2024-10-27', '12:00:00', 'Pending'),
+('Toby Tan', 'user4@example.com', '2024-11-06', '12:50:00', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,8 @@ CREATE TABLE `contact_messages` (
 
 INSERT INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`) VALUES
 (3, 'John Lee', 'user1@example.com', 'Hello! I noticed that one of the treadmills in the gym isn’t working properly. Could you please look into this? Thank you!', '2024-10-27 14:04:31'),
-(4, 'Sarah Tay', 'user2@example.com', 'I just wanted to say that I love your facility! The equipment is great, but I think it would be helpful to have more group classes. Thanks for providing such a positive environment!', '2024-10-27 14:05:45');
+(4, 'Sarah Tay', 'user2@example.com', 'I just wanted to say that I love your facility! The equipment is great, but I think it would be helpful to have more group classes. Thanks for providing such a positive environment!', '2024-10-27 14:05:45'),
+(5, 'Jenny Leong', 'user5@example.com', 'Hello! I’m considering joining your fitness center, but I want to understand your cancellation policy. Could you provide some details on this?', '2024-10-29 04:53:47');
 
 -- --------------------------------------------------------
 
@@ -77,7 +79,9 @@ CREATE TABLE `exercise` (
   `RecordID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
   `DateTime` datetime NOT NULL,
-  `record` varchar(255) NOT NULL
+  `record` varchar(255) NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -103,7 +107,9 @@ INSERT INTO `userinfo` (`userID`, `type`, `email`, `password`) VALUES
 (3, 'user', 'user1@example.com', '$2y$10$MCJBVqeXBdG7EjZmFsJOFufrfhqKLQGbVGf.WNRtd33bupbnRhCfG'),
 (4, 'user', 'user2@example.com', '$2y$10$Lgm/DQcOhxG0D/eN3vom/.4h3H96hy7ErfeOs4XhNzimYGZLfzQS6'),
 (5, 'user', 'user3@example.com', '$2y$10$rS9K3EOnsB1eo.mTEf/tFOpgh5huBomcMMpQJGO.FXLgTFJYmZwyC'),
-(6, 'admin', 'admin@example.com', '$2y$10$TNKP44IQiTfrHIb75V/kLO8Zgt4C4cJ3icFV9yVkvVMqVv6Mz6DG6');
+(6, 'admin', 'admin@example.com', '$2y$10$TNKP44IQiTfrHIb75V/kLO8Zgt4C4cJ3icFV9yVkvVMqVv6Mz6DG6'),
+(7, 'user', 'user4@example.com', '$2y$10$A66JrM31eMiJ6q8dci6.n.KkAzCy.qQ87rA/qQKEOQLTesDV4Q0HK'),
+(8, 'user', 'user5@example.com', '$2y$10$i6ir8voCHC5KY1D3c2LbEeGAj7ZtBz5RoA1BgsgvDicJucrBwmNha');
 
 -- --------------------------------------------------------
 
@@ -184,7 +190,7 @@ ALTER TABLE `weight`
 -- AUTO_INCREMENT for table `contact_messages`
 --
 ALTER TABLE `contact_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `exercise`
@@ -196,7 +202,7 @@ ALTER TABLE `exercise`
 -- AUTO_INCREMENT for table `userinfo`
 --
 ALTER TABLE `userinfo`
-  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `userID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `water`
