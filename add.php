@@ -59,7 +59,6 @@
             border-radius: 5px;
         }
         button {
-            position: fixed; 
             padding: 10px 20px;
             background-color: #405dde;
             color: white;
@@ -73,6 +72,7 @@
             background-color: #364cb1;
         }
         footer {
+            position: fixed;
             text-align: center;
             color: white; 
             background: #405dde;
