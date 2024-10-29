@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-
 header{
 	right: 0;
 	left: 0;
@@ -19,11 +18,13 @@ body{
 	background-image: url('https://st4.depositphotos.com/1022135/25748/i/450/depositphotos_257486682-stock-photo-group-young-people-sportswear-talking.jpg');
 	background-size: cover;
 	margin: 0;
-	right: 0;
-	left: 0;
+	padding-bottom: 150px;
 }
 
 .contain{
+	display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 	width: 50%;
 	height: 300px;
 	background: #c4d7f5;
@@ -75,6 +76,66 @@ footer{
 	position: fixed;
 	bottom: 0;
 	border-style: ridge;
+}
+@media (max-width: 1700px) {
+    .contain {
+		width: 55%;
+		display: flex;
+    	justify-content: space-between;
+    	align-items: flex-start;
+    }
+}
+@media (max-width: 1500px) {
+    .contain {
+		padding-bottom: 150px;
+    }
+}
+@media (max-width: 1100px) {
+    .contain {
+        width: 50%;
+		height: 400px;
+        flex-direction: column;
+    }
+    .signup, .condition {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+	body{
+		padding-bottom: 150px;
+	}
+}
+@media (max-width: 900px) {
+    .contain {
+        width: 50%;
+		height: 500px;
+        flex-direction: column;
+    }
+    .signup, .condition {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+	body{
+		padding-bottom: 150px;
+	}
+}
+@media (max-width: 600px) {
+    .contain {
+        width: 50%;
+		height: 540px;
+        flex-direction: column;
+    }
+    .signup, .condition {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+	body{
+		padding-bottom: 150px;
+	}
+	.g-recaptcha{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 </style>
 <body>
