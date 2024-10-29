@@ -1,3 +1,11 @@
+<style>
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+</style>
+
 <?php
 $userid = $_SESSION['userID'];
 $dbname = $_POST['dbname'];
@@ -32,6 +40,7 @@ $result = $stmt->get_result();
 // Check for query success
 if ($result && $result->num_rows > 0) {
     // Display the results in an HTML table
+    echo "You can view your records here...<br>";
     echo "<table border='1'>";
     echo "<tr>";
     foreach ($tableHeaders as $header) {
